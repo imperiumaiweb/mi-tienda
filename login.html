@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Login Admin</title>
+</head>
+<body>
+
+  <h1>🔐 Login Administrador</h1>
+
+  <input id="user" placeholder="Usuario"><br><br>
+  <input id="pass" type="password" placeholder="Contraseña"><br><br>
+
+  <button onclick="login()">Entrar</button>
+
+  <p id="msg"></p>
+
+  <script>
+    function login() {
+
+      fetch("/login", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+          user: document.getElementById("user").value,
+          pass: document.getElementById("pass").value
+        })
+      })
+      .then(res => res.text())
+      .then(data => {
+
+        if (data === "OK") {
+
+  sessionStorage.setItem("logged", "true");
+
+  window.location.href = "/admin.html";
+
+} else {
+          document.getElementById("msg").innerText = "❌ Datos incorrectos";
+        }
+
+      });
+
+    }
+  </script>
+
+</body>
+</html>

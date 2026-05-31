@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<script>
+  if (sessionStorage.getItem("logged") !== "true") {
+    window.location.href = "/login.html";
+  }
+</script>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Administración</title>
+  <style>
+    body {
+      font-family: Arial;
+      padding: 20px;
+      max-width: 800px;
+      margin: auto;
+    }
+
+    input {
+      padding: 8px;
+      margin: 5px;
+    }
+
+    button {
+      padding: 8px 12px;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 20px;
+    }
+
+    td, th {
+      border: 1px solid #ccc;
+      padding: 10px;
+    }
+  </style>
+</head>
+<body>
+
+<h1>Panel de Administración</h1>
+
+<input id="name" placeholder="Nombre del producto">
+
+<input id="price" type="number" placeholder="Precio">
+
+<button onclick="addProduct()">
+  Agregar Producto
+</button>
+
+<hr>
+
+<button onclick="createBackup()" style="background: green; color: white;">
+  💾 Crear Respaldo
+</button>
+
+<p id="backupMessage"></p>
+
+<h2>Productos</h2>
+
+<table>
+  <thead>
+    <tr>
+      <th>ID</th>
+      <th>Nombre</th>
+      <th>Precio</th>
+    </tr>
+  </thead>
+
+  <tbody id="productsTable"></tbody>
+</table>
+
+<script src="admin.js"></script>
+
+<button onclick="logout()">Cerrar sesión</button>
+
+<script>
+function logout() {
+  sessionStorage.removeItem("logged");
+  window.location.href = "/login.html";
+}
+</script>
+
+</body>
+</html>
