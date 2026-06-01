@@ -1,4 +1,8 @@
-const db = require("./database");
+let products = [
+  { id: 1, name: "Laptop", price: 500 },
+  { id: 2, name: "Mouse", price: 20 },
+  { id: 3, name: "Teclado", price: 50 }
+];
 const http = require("http");
 const fs = require("fs");
 const PORT = process.env.PORT || 3000;
@@ -11,15 +15,11 @@ let loggedIn = false;
 const server = http.createServer((req, res) => {
  if (req.url === "/products") {
 
-  db.all("SELECT * FROM products", [], (err, rows) => {
-
-    res.writeHead(200, {
-      "Content-Type": "application/json"
-    });
-
-    res.end(JSON.stringify(rows));
-
+  res.writeHead(200, {
+    "Content-Type": "application/json"
   });
+
+  res.end(JSON.stringify(products));
 
   return;
 }
@@ -38,10 +38,11 @@ const server = http.createServer((req, res) => {
   req.on("end", () => {
     const product = JSON.parse(body);
 
-    db.run(
-      "INSERT INTO products (name, price) VALUES (?, ?)",
-      [product.name, product.price]
-    );
+    dproducts.push({
+  id: Date.now(),
+  name: product.name,
+  price: product.price
+});
 
     res.end("OK");
   });
@@ -98,7 +99,7 @@ const server = http.createServer((req, res) => {
 
     const data = JSON.parse(body);
 
-    db.run("DELETE FROM products WHERE id = ?", [data.id]);
+    products = products.filter(p => p.id !== data.id);
 
     res.writeHead(200);
     res.end("OK");
@@ -123,10 +124,12 @@ if (req.url === "/update-product" && req.method === "POST") {
 
     const data = JSON.parse(body);
 
-    db.run(
-      "UPDATE products SET name = ?, price = ? WHERE id = ?",
-      [data.name, data.price, data.id]
-    );
+    const product = products.find(p => p.id === data.id);
+
+    if (product) {
+      product.name = data.name;
+      product.price = data.price;
+}
 
     res.writeHead(200);
     res.end("OK");
@@ -188,6 +191,8 @@ if (req.url === "/login" && req.method === "POST") {
 
 });
 
-server.listen(3000, () => {
-  console.log("Tienda corriendo en http://localhost:3000");
+const PORT = process.env.PORT || 3000;
+
+server.listen(PORT, () => {
+  console.log("Servidor corriendo en puerto " + PORT);
 });
