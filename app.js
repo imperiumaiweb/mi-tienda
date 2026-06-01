@@ -5,24 +5,25 @@ let products = [
 ];
 const http = require("http");
 const fs = require("fs");
-const PORT = process.env.PORT || 3000;
 
-server.listen(PORT, () => {
-  console.log("Servidor corriendo en puerto " + PORT);
-});
 let loggedIn = false;
 
+let products = [
+  { id: 1, name: "Laptop", price: 500 },
+  { id: 2, name: "Mouse", price: 20 },
+  { id: 3, name: "Teclado", price: 50 }
+];
+
 const server = http.createServer((req, res) => {
- if (req.url === "/products") {
 
-  res.writeHead(200, {
-    "Content-Type": "application/json"
-  });
+  if (req.url === "/products") {
+    res.writeHead(200, {
+      "Content-Type": "application/json"
+    });
 
-  res.end(JSON.stringify(products));
-
-  return;
-}
+    res.end(JSON.stringify(products));
+    return;
+  }
  if (req.url === "/add-product" && req.method === "POST") {
 
   if (!loggedIn) {
