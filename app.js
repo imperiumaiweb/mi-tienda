@@ -1,8 +1,3 @@
-let products = [
-  { id: 1, name: "Laptop", price: 500 },
-  { id: 2, name: "Mouse", price: 20 },
-  { id: 3, name: "Teclado", price: 50 }
-];
 const http = require("http");
 const fs = require("fs");
 
