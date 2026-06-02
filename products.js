@@ -17,12 +17,17 @@ function renderProducts() {
   container.innerHTML = "";
 
   products.forEach(p => {
+    console.log("IMG:", p.image, typeof p.image);
 
     container.innerHTML += `
       <div class="card">
 
-        <img src="${p.image}" width="150" height="150" />
-
+        <img 
+            src="${p.image || 'https://via.placeholder.com/150'}"
+            width="150"
+            height="150"
+            style="object-fit: cover;"
+        />
         <h3>${p.name}</h3>
         <p>$${p.price}</p>
 

@@ -3,30 +3,30 @@
     "id": 1,
     "name": "Laptop",
     "price": 500,
-    "image": "https://via.placeholder.com/150"
+    "image": "https://picsum.photos/150"
   },
   {
     "id": 2,
     "name": "Mouse",
     "price": 20,
-    "image": "https://via.placeholder.com/150"
+    "image": "https://picsum.photos/150"
   },
   {
     "id": 3,
     "name": "Teclado",
     "price": 50,
-    "image": "https://via.placeholder.com/150"
+    "image": "https://picsum.photos/150"
   },
   {
     "id": 1780363523527,
     "name": "Monitor",
     "price": 150,
-    "image": "https://via.placeholder.com/150"
+    "image": "https://picsum.photos/150"
   },
   {
     "id": 1780364135097,
     "name": "Audifonos",
     "price": 75,
-    "image": "https://via.placeholder.com/150"
+    "image": "https://picsum.photos/150"
   }
 ]
