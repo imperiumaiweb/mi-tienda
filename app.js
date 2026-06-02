@@ -3,11 +3,9 @@ const fs = require("fs");
 
 let loggedIn = false;
 
-let products = [
-  { id: 1, name: "Laptop", price: 500 },
-  { id: 2, name: "Mouse", price: 20 },
-  { id: 3, name: "Teclado", price: 50 }
-];
+let products = JSON.parse(
+  fs.readFileSync("./productos.json", "utf8")
+);
 
 const server = http.createServer((req, res) => {
 
@@ -34,13 +32,18 @@ const server = http.createServer((req, res) => {
   req.on("end", () => {
     const product = JSON.parse(body);
 
-    dproducts.push({
+    products.push({
   id: Date.now(),
   name: product.name,
-  price: product.price
+  price: Number(product.price)
 });
 
-    res.end("OK");
+fs.writeFileSync(
+  "./productos.json",
+  JSON.stringify(products, null, 2)
+);
+
+res.end("OK");
   });
 
   return;
@@ -95,8 +98,14 @@ const server = http.createServer((req, res) => {
 
     const data = JSON.parse(body);
 
-    products = products.filter(p => p.id !== data.id);
-
+    products = products.filter(
+        p => p.id !== data.id
+    );
+    fs.writeFileSync(
+      "./productos.json",
+      JSON.stringify(products, null, 2)
+    );
+    
     res.writeHead(200);
     res.end("OK");
 
@@ -120,12 +129,18 @@ if (req.url === "/update-product" && req.method === "POST") {
 
     const data = JSON.parse(body);
 
-    const product = products.find(p => p.id === data.id);
+    const product = products.find(
+        p => p.id === data.id
+    );
 
     if (product) {
       product.name = data.name;
-      product.price = data.price;
-}
+      product.price = Number(data.price);
+    }
+    fs.writeFileSync(
+      "./productos.json",
+      JSON.stringify(products, null, 2)
+    );
 
     res.writeHead(200);
     res.end("OK");
