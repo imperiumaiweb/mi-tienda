@@ -16,7 +16,12 @@
   },
   {
     "id": 1780363523527,
-    "name": "monitor",
+    "name": "Monitor",
     "price": 150
+  },
+  {
+    "id": 1780364135097,
+    "name": "Audifonos",
+    "price": 75
   }
 ]
