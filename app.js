@@ -1,22 +1,45 @@
 const http = require("http");
 const fs = require("fs");
-
+const path = require("path");
 let loggedIn = false;
+let products = [];
 
-let products = JSON.parse(
-  fs.readFileSync("./productos.json", "utf8")
-);
+const filePath = path.join(__dirname, "productos.json");
+
+try {
+  const data = fs.readFileSync(filePath, "utf8");
+  products = JSON.parse(data);
+} catch (err) {
+  console.log("No se pudo cargar productos.json, usando vacío");
+  console.log("ERROR REAL:", err.message);
+  products = [];
+}
+
 
 const server = http.createServer((req, res) => {
 
   if (req.url === "/products") {
+
+  const filePath = path.join(__dirname, "productos.json");
+
+  try {
+    const data = fs.readFileSync(filePath, "utf8");
+    const products = JSON.parse(data);
+
     res.writeHead(200, {
       "Content-Type": "application/json"
     });
 
     res.end(JSON.stringify(products));
-    return;
+
+  } catch (err) {
+    console.log("Error leyendo productos.json:", err.message);
+    res.writeHead(500);
+    res.end("Error cargando productos");
   }
+
+  return;
+}
  if (req.url === "/add-product" && req.method === "POST") {
 
   if (!loggedIn) {
@@ -35,7 +58,8 @@ const server = http.createServer((req, res) => {
     products.push({
   id: Date.now(),
   name: product.name,
-  price: Number(product.price)
+  price: Number(product.price),
+  image: product.image || "https://via.placeholder.com/150"
 });
 
 fs.writeFileSync(
@@ -105,7 +129,7 @@ res.end("OK");
       "./productos.json",
       JSON.stringify(products, null, 2)
     );
-    
+
     res.writeHead(200);
     res.end("OK");
 

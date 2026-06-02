@@ -14,21 +14,26 @@ fetch("/products")
 
 function renderProducts() {
 
+  container.innerHTML = "";
+
   products.forEach(p => {
 
     container.innerHTML += `
       <div class="card">
+
+        <img src="${p.image}" width="150" height="150" />
+
         <h3>${p.name}</h3>
         <p>$${p.price}</p>
 
         <button onclick="addToCart(${p.id})">
           Comprar
         </button>
+
       </div>
     `;
 
   });
-
 }
 
 function addToCart(id) {
